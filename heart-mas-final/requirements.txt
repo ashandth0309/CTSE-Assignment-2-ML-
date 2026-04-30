@@ -1,0 +1,5 @@
+crewai
+pandas
+scikit-learn
+joblib
+ollama
