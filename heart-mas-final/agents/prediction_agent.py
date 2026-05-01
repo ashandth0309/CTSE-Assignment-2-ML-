@@ -7,5 +7,5 @@ prediction_agent = Agent(
     backstory="Expert in machine learning predictions",
     tools=[predict],
     verbose=True,
-    llm="ollama/phi3"
+    llm = "ollama/llama3"
 )

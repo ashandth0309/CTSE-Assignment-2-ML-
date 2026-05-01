@@ -7,5 +7,5 @@ data_agent = Agent(
     backstory="Expert in handling medical datasets",
     tools=[preprocess],
     verbose=True,
-    llm="ollama/phi3"
+    llm = "ollama/llama3"
 )

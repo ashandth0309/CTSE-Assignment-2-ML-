@@ -7,5 +7,5 @@ feature_agent = Agent(
     backstory="Expert in feature engineering",
     tools=[to_features],
     verbose=True,
-    llm="ollama/phi3"
+    llm = "ollama/llama3"
 )

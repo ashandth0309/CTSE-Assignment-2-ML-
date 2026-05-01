@@ -1,46 +1,25 @@
-from crewai import Task, Crew
 import logging
 
-from agents.data_agent import data_agent
-from agents.feature_agent import feature_agent
-from agents.prediction_agent import prediction_agent
-from agents.explanation_agent import explanation_agent
+from tools.preprocess_tool import preprocess
+from tools.feature_tool import to_features
+from tools.prediction_tool import predict
+from tools.explanation_tool import explain
 
 logging.basicConfig(filename='logs/system.log', level=logging.INFO)
 
 def run_system(input_data):
 
-    task1 = Task(
-        description=f"Clean this patient data: {input_data}",
-        agent=data_agent,
-        expected_output="Cleaned patient data as dictionary"
-    )
+    print("\n--- Agent 1: Data Agent (Cleaning Data) ---")
+    cleaned_data = preprocess.run(input_data)
 
-    task2 = Task(
-        description="Convert cleaned data into features for ML model",
-        agent=feature_agent,
-        expected_output="Feature list for ML model"
-    )
+    print("\n--- Agent 2: Feature Agent (Feature Extraction) ---")
+    features = to_features.run(cleaned_data)
 
-    task3 = Task(
-        description="Predict heart disease using ML model",
-        agent=prediction_agent,
-        expected_output="Prediction result (0 or 1)"
-    )
+    print("\n--- Agent 3: Prediction Agent (ML Prediction) ---")
+    prediction = predict.run(features)
 
-    task4 = Task(
-        description="Explain the prediction result in simple terms",
-        agent=explanation_agent,
-        expected_output="Human readable explanation"
-    )
-
-    crew = Crew(
-        agents=[data_agent, feature_agent, prediction_agent, explanation_agent],
-        tasks=[task1, task2, task3, task4],
-        verbose=True
-    )
-
-    result = crew.kickoff(inputs={"input_data": input_data})
+    print("\n--- Agent 4: Explanation Agent (Generating Explanation) ---")
+    result = explain.run(prediction)
 
     logging.info(result)
 
@@ -66,4 +45,4 @@ if __name__ == "__main__":
     }
 
     output = run_system(sample_input)
-    print(output)
+    print("\nFinal Output:", output)

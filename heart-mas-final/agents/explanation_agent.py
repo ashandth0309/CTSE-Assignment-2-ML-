@@ -7,5 +7,5 @@ explanation_agent = Agent(
     backstory="Doctor-like assistant for patient guidance",
     tools=[explain],
     verbose=True,
-    llm="ollama/phi3"
+    llm = "ollama/llama3"
 )
